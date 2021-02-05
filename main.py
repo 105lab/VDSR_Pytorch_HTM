@@ -10,17 +10,18 @@ from VDSR import Net
 from dataset_h5 import Read_dataset_h5
 import numpy as np
 import math
+from dataset import DatasetFromHdf5
 
 # Training settings
 parser = argparse.ArgumentParser(description="PyTorch VDSR")
-parser.add_argument("--batchSize", type=int, default=64)
-parser.add_argument("--nEpochs", type=int, default=80)
+parser.add_argument("--batchSize", type=int, default=1)
+parser.add_argument("--nEpochs", type=int, default=160)
 parser.add_argument("--lr", type=float, default=0.1)
-parser.add_argument("--step", type=int, default=20)
+parser.add_argument("--step", type=int, default=10)
 parser.add_argument("--cuda", action="store_true")
 parser.add_argument("--start-epoch", default=1, type=int)
 parser.add_argument("--clip", type=float, default=0.4)
-parser.add_argument("--threads", type=int, default=1)
+parser.add_argument("--threads", type=int, default=0)
 parser.add_argument("--momentum", default=0.9, type=float)
 parser.add_argument("--weight-decay", "--wd", default=1e-4, type=float)
 parser.add_argument('--pretrained', default='', type=str)
@@ -48,7 +49,8 @@ def main():
     cudnn.benchmark = True # find optimal algorithms for hardware
 
     print("===> Loading datasets")
-    train_set = Read_dataset_h5("data/train.h5")
+    # train_set = Read_dataset_h5("data/train.h5") #原本作者的
+    train_set = DatasetFromHdf5("D:/mytestfile_41x41_all_small_x2.h5") #自己包的
     training_data_loader = DataLoader(dataset=train_set, num_workers=opt.threads, batch_size=opt.batchSize, shuffle=True) # read to DataLoader
 
     print("===> Building model")

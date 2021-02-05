@@ -12,8 +12,8 @@ from PIL import Image
 
 def main():
     parser = argparse.ArgumentParser(description="Eval VDSR")
-    parser.add_argument('--pretrained', default='', type=str)
-    parser.add_argument('--imgpath', default='/data/Test/Set5/baby_GT_scale_3.bmp', type=str)
+    parser.add_argument('--pretrained', default='checkpoint/VDSR_SGD_epoch_48.pth', type=str)
+    parser.add_argument('--imgpath', default='/data/0.png', type=str)#/data/Test/Set5/baby_GT_scale_3.bmp
     opt = parser.parse_args() # opt < parser
     print(opt)
 
